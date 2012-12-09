@@ -8,17 +8,17 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'django_db',                      # Or path to database file if using sqlite3.
-        'USER': 'django_login',                      # Not used with sqlite3.
-        'PASSWORD': 'punnisher',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
+DATABASE_URL = 'postgres://django_login:punnisher@localhost:5432/django_db'
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+#        'NAME': 'django_db',                      # Or path to database file if using sqlite3.
+#        'USER': 'django_login',                      # Not used with sqlite3.
+#        'PASSWORD': 'punnisher',                  # Not used with sqlite3.
+#        'HOST': '127.0.0.1',                      # Set to empty string for localhost. Not used with sqlite3.
+#        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
     }
-}
+#}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -116,9 +116,12 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'django.contrib.admindocs',
+	'OnCredit',
+	'tastypie',
+	'south',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -150,4 +153,4 @@ LOGGING = {
     }
 }
 import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
+DATABASES = {'default':  dj_database_url.config(DATABASE_URL)}
