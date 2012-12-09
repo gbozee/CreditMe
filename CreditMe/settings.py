@@ -17,7 +17,7 @@ DATABASE_URL = 'postgres://django_login:punnisher@localhost:5432/django_db'
 #        'PASSWORD': 'punnisher',                  # Not used with sqlite3.
 #        'HOST': '127.0.0.1',                      # Set to empty string for localhost. Not used with sqlite3.
 #        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
-    }
+#    }
 #}
 
 # Local time zone for this installation. Choices can be found here:
@@ -153,4 +153,4 @@ LOGGING = {
     }
 }
 import dj_database_url
-DATABASES = {'default':  dj_database_url.config(DATABASE_URL)}
+DATABASES = {'default':  dj_database_url.config(default=DATABASE_URL)}
