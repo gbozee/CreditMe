@@ -12,6 +12,12 @@ from OnCredit.models import *
 class TemplateResource(ModelResource):
 	class Meta:
 		include_resource_uri = False
+		filtering = {
+			'user': ALL_WITH_RELATIONS,
+            'network_type': ALL,
+            'used': ALL,
+            'amount_charged': ALL,
+        }
 		
 	def alter_list_data_to_serialize(self,request,data_dict):
 		if isinstance(data_dict,dict):
@@ -58,12 +64,7 @@ class PostpaidResource(TemplateResource):
 		queryset= Postpaid.objects.all()
 		resource_name='postpaid'
 		authorization = Authorization()
-		filtering = {
-			'user': ALL_WITH_RELATIONS,
-            'network_type': ALL,
-            'used': ALL,
-            'amount_charged': ALL,
-        }
+		
 
 class TransportResource(TemplateResource):
 	class Meta:
