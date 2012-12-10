@@ -7,7 +7,7 @@ from django.db.models.signals import post_save
 # Create your models here.
 
 #Abstract base class for buying recharge cards on credit
-NETWORK = (('MTN','MTN'),('Airtel','Airtel'),('Globacom','Globacom'),('Etisalat','Etisalat'),
+NETWORK = (('MTN','MTN'),('AIRTEL','AIRTEL'),('GLO','GLO'),('ETISALAT','ETISALAT'),
 			('Starcomms','Starcomms'),('Multilinks','Multilinks'),('Visafone','Visafone'),)
 RECHARGE_TYPE = (('Virtual', 'Virtual'),('SMS', 'SMS'),)
 PAYMENT_MODE = (('Debit', 'Debit'),('Credit', 'Credit'),)

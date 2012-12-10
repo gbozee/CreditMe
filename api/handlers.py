@@ -9,16 +9,28 @@ from tastypie.authorization import Authorization
 
 from OnCredit.models import *
 
-class UserResource(ModelResource):
+class TemplateResource(ModelResource):
+	class Meta:
+		include_resource_uri = False
+		
+	def alter_list_data_to_serialize(self,request,data_dict):
+		if isinstance(data_dict,dict):
+			if 'meta' in data_dict:
+				#Get rid of the meta objects
+				del(data_dict['meta'])
+		return data_dict
+	
+
+class UserResource(TemplateResource):
 	class Meta:
 		queryset = User.objects.all()
 		resource_name = 'user'
 		excludes = ['email', 'password', 'is_active', 'is_staff', 'is_superuser']
 		filtering = {
 		    'username': ALL,
-		}
+		}		
 
-class PrepaidResource(ModelResource):
+class PrepaidResource(TemplateResource):
 	"""
 	Authenticated entrypoint for Credit Users.
 	"""
@@ -26,45 +38,21 @@ class PrepaidResource(ModelResource):
 	class Meta:
 		queryset = Prepaid.objects.all()
 		resource_name = 'prepaid'
-		#serializer = Serializer(formats=['json','plist'])
-		#authorization = Authorization
-	# fields = ('id','network_type','amount_charged','pincode ')
-	# model = Prepaid
 
-	# @classmethod
-	# def resource_uri(cls, perpaid):
-	# 	return ('prepaids', [ 'json', ])
-
-	# def read(self, request, Id=None):
-	# 	"""
-	# 	Returns a blogpost, if `title` is given,
-	# 	otherwise all the posts.
-
-	# 	Parameters:
-	# 	 - `title`: The title of the post to retrieve.
-	# 	"""
-	# 	base = Prepaid.objects
-
-	# 	if Id:
-	# 		return base.get(pk=Id)
-	# 	else:
-	# 		return base.all()
-
-
-class CableTVResource(ModelResource):
+class CableTVResource(TemplateResource):
 	class Meta:
 		queryset=CableTV.objects.all()
 		resource_name='cable-tv'
 		authorization=Authorization
 
-class CableSubscriptionResource(ModelResource):
+class CableSubscriptionResource(TemplateResource):
 	subscription = fields.ForeignKey(CableTVResource, 'subscription')
 	class Meta:
 		queryset = CableTVSubscription.objects.all()
 		resource_name= 'cable-subscription'
 		authorization=Authorization
 
-class PostpaidResource(ModelResource):
+class PostpaidResource(TemplateResource):
 	user = fields.ForeignKey(UserResource, 'user')
 	class Meta:
 		queryset= Postpaid.objects.all()
@@ -76,18 +64,16 @@ class PostpaidResource(ModelResource):
             'used': ALL,
             'amount_charged': ALL,
         }
-        #serializer = Serializer(formats=['json','jsonp'])
 
-
-class TransportResource(ModelResource):
+class TransportResource(TemplateResource):
 	class Meta:
 		queryset= TransportBills.objects.all()
 
-class UtilityResource(ModelResource):
+class UtilityResource(TemplateResource):
 	class Meta:
 		queryset= UtilityBills.objects.all()
 
 
-class DataPlanResource(ModelResource):
+class DataPlanResource(TemplateResource):
 	class Meta:
 		queryset= DataPlan.objects.all()
