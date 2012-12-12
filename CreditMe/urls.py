@@ -11,6 +11,7 @@ oncredit_api.register(CableTVResource())
 oncredit_api.register(CableSubscriptionResource())
 oncredit_api.register(PostpaidResource())
 oncredit_api.register(UserResource())
+oncredit_api.register(IdResource())
 
 urlpatterns = patterns('',
     # Examples:

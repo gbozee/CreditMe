@@ -21,17 +21,22 @@ DATA_PLAN = (('BIS','BIS'),('10mb','10mb'),('25mb','25mb'),('50mb','50mb'),('150
 			('375mb','375mb'),('750mb','750mb'),('1G','1G'),('1.5G','1.5G'),('3G','3G'),('4.5G','4.5G'),('6G','6G'),
 			('7.5G','7.GG'),('9G','9G'),('10G','10G'),('15G','15G'),('20G','20G'),)
 
+RATINGS = Choices(('ONE','1 star'),('TWO','2 stars'),('THREE','3 stars'),('FOUR','4 stars'),('FIVE','5 stars'),)
 
-# class CreditUser(models.Model):
-# 	accountName = models.CharField(max_length = 10)
-# 	email_addr = models.EmailField()
-# 	phone_number = models.CharField(max_length= 11)
-# 	total_amount_borrowed = models.DecimalField(max_digits=9,decimal_places=2)
-# 	pin = IntegerRangeField(min_value = 4)
-	
+class UniqueID(models.Model):
+	unique_id = models.CharField(max_length=11,default="08124450295")
 
-# 	def __unicode__ (self):
-# 		return self.accountName
+	def __unicode__(self):
+		return self.unique_id
+
+class CreditUser(models.Model):
+	accountName = models.CharField(max_length = 10)
+	email_addr = models.EmailField()
+	phone_number = models.ForeignKey(UniqueID)
+	total_amount_borrowed = models.DecimalField(max_digits=9,decimal_places=2,editable=False,default=0.00)
+	present_Rating = models.IntegerField(choices=RATINGS,default=RATINGS.ONE)
+	def __unicode__(self):
+		return "%s(%s)" % (self.accountName,self.total_amount_borrowed)
 class Recharge(models.Model):
 	user = models.ForeignKey(User)
 	network_type = models.CharField(choices=NETWORK, max_length=15)
@@ -47,7 +52,10 @@ class Prepaid(Recharge):
 
 #Model for postpaid recharge
 class Postpaid(Recharge):
+	phone_number = models.ForeignKey(UniqueID,default='07035209976')
 	duration = models.CharField(choices=DURATION, max_length=30)
+	time = models.DateTimeField(default=datetime.datetime.now)
+	
 	
 		
 #Abstract base model for TV, Transport and Utilities

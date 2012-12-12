@@ -31,6 +31,12 @@ class UserResource(TemplateResource):
 		    'username': ALL,
 		}		
 
+class IdResource(TemplateResource):
+	class Meta:
+		queryset=UniqueID.objects.all()
+		resource_name = 'unique_id'
+		filtering={'unique_id':ALL,}
+
 class PrepaidResource(TemplateResource):
 	"""
 	Authenticated entrypoint for Credit Users.
@@ -39,6 +45,7 @@ class PrepaidResource(TemplateResource):
 	class Meta:
 		queryset = Prepaid.objects.all()
 		resource_name = 'prepaid'
+		authorization=Authorization()
 		filtering = {
 			'user': ALL_WITH_RELATIONS,
             'network_type': ALL,
@@ -67,6 +74,7 @@ class PostpaidResource(TemplateResource):
 		authorization = Authorization()
 		filtering = {
 			'user': ALL_WITH_RELATIONS,
+			'phone_number': ALL_WITH_RELATIONS,
             'network_type': ALL,
             'used': ALL,
             'amount_charged': ALL,

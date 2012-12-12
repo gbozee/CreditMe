@@ -1,5 +1,5 @@
 from django.contrib import admin
-from OnCredit.models import  Prepaid,Postpaid,UtilityBills,TransportBills,CableTV,CableTVSubscription,SubscriptionPlan,DataPlan
+from OnCredit.models import  *
 
 class DataPlanAdmin(admin.ModelAdmin):
 	pass
@@ -24,6 +24,11 @@ class TransPortBillsAdmin(admin.ModelAdmin):
 
 class SubscriptionPlanAdmin(admin.ModelAdmin):
 	pass
+
+class UniqueIDAdmin(admin.ModelAdmin):
+	pass
+
+admin.site.register(UniqueID,UniqueIDAdmin)
 
 admin.site.register(DataPlan,DataPlanAdmin)
 admin.site.register(CableTV, CableTVAdmin)
